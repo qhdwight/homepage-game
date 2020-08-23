@@ -89,6 +89,28 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
+  - name: Window
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 26
+      width: 2
+      height: 7
+    spriteID: 221133579c1c6264b885864905e20dfe
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -37, y: 21}
   - name: Head
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -99,7 +121,7 @@ ScriptedImporter:
       x: 48
       y: 4
       width: 11
-      height: 11
+      height: 13
     spriteID: 762135c362e68de448fb85c815a0d6b4
     internalID: 0
     spriteBone: []
@@ -110,7 +132,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 11, y: 1}
+    uvTransform: {x: 11, y: 2}
   - name: Container
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -163,6 +185,13 @@ ScriptedImporter:
   characterMode: 1
   mosaicPSDLayers: []
   rigPSDLayers:
+  - name: Window
+    spriteName: Window
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 221133579c1c6264b885864905e20dfe
+    layerID: 9
+    mosaicPosition: {x: 4, y: 26}
   - name: Head
     spriteName: Head
     isGroup: 0

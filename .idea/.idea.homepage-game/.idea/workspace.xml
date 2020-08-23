@@ -5,6 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee9f17dd-14de-4a6c-92ef-5653ee1787b7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.homepage-game.dir/.idea/contentModel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.homepage-game.dir/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.homepage-game.dir/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.homepage-game.dir/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.homepage-game.dir/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.homepage-game.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Frogger.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Frogger.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/FroggerBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FroggerBehavior.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ObstacleBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ObstacleBehavior.cs" afterDir="false" />
@@ -78,7 +84,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598217177795</updated>
-      <workItem from="1598217186897" duration="6998000" />
+      <workItem from="1598217186897" duration="7167000" />
     </task>
     <servers />
   </component>

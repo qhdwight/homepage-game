@@ -53,7 +53,7 @@ public class FroggerBehavior : MonoBehaviour
     private void DecrementHealth()
     {
         int health = m_Health - 1;
-        IEnumerator Load()
+        IEnumerator DecrementEnumerator()
         {
             m_IsDead = true;
             m_Animator.Play("Die");
@@ -66,7 +66,7 @@ public class FroggerBehavior : MonoBehaviour
                 transform.SetPositionAndRotation(m_Spawn, Quaternion.identity);
             }
         }
-        StartCoroutine(Load());
+        StartCoroutine(DecrementEnumerator());
         SetHealth(health);
     }
 

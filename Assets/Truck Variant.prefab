@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Truck Variant
       objectReference: {fileID: 0}
+    - target: {fileID: -3611811655450192305, guid: 5d03f6eeb7c595f45887646312d24137, type: 3}
+      propertyPath: m_SortingOrder
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 3356543278413346764, guid: 5d03f6eeb7c595f45887646312d24137, type: 3}
       propertyPath: m_Color.r
       value: 0.8745098
