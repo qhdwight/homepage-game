@@ -12,18 +12,21 @@ namespace Frogger
     {
         [SerializeField] private int m_StartingHealth = 3;
         [SerializeField] private Sprite m_WaterSprite = default;
+        [SerializeField] private float m_DieSeconds = 1.0f;
 
         private Animator m_Animator;
         private Tilemap m_Tilemap;
         private Vector3 m_Spawn;
-        private SpriteRenderer[] m_Hearts;
+        private GameObject[] m_Hearts;
         private int m_Health;
         private bool m_IsDead;
         private Transform m_Carrier;
         private MovingBehavior[] m_Behaviors;
         private Vector3 m_Input;
+        private BoxCollider2D m_Box;
+        private BoxCollider2D[] m_CaptureFrogs;
 
-        public Transform Carrier
+        private Transform Carrier
         {
             get => m_Carrier;
             set
@@ -33,16 +36,15 @@ namespace Frogger
             }
         }
 
-        public BoxCollider2D Box { get; private set; }
-
         private void Start()
         {
-            Box = GetComponent<BoxCollider2D>();
+            m_Box = GetComponent<BoxCollider2D>();
             m_Animator = GetComponent<Animator>();
             m_Tilemap = FindObjectOfType<Tilemap>();
             m_Behaviors = FindObjectsOfType<MovingBehavior>();
-            m_Hearts = GameObject.FindGameObjectsWithTag("Heart").Select(go => go.GetComponent<SpriteRenderer>()).ToArray();
+            m_Hearts = GameObject.FindGameObjectsWithTag("Heart").ToArray();
             m_Spawn = transform.position;
+            m_CaptureFrogs = FindObjectsOfType<CaptureFrogBehavior>().Select(behavior => behavior.GetComponent<BoxCollider2D>()).ToArray();
             SetHearts(m_StartingHealth);
         }
 
@@ -65,9 +67,13 @@ namespace Frogger
                 else nextCellPosition = null;
             }
 
+            Bounds cameraBounds = CameraManager.Bounds;
+            if (m_Box.bounds.min.x > cameraBounds.max.x) Kill();
+            if (m_Box.bounds.max.x < cameraBounds.min.x) Kill();
+
             foreach (MovingBehavior behavior in m_Behaviors)
             {
-                bool isIntersecting = Box.bounds.Intersects(behavior.Box.bounds);
+                bool isIntersecting = m_Box.bounds.Intersects(behavior.Box.bounds);
                 if (behavior.HandleFrogger(isIntersecting))
                 {
                     if (behavior.IsKilling && isIntersecting) Kill();
@@ -76,6 +82,20 @@ namespace Frogger
                         if (Carrier == behavior.transform) Carrier = null;
                         else if (isIntersecting) Carrier = behavior.transform;
                     }
+                }
+            }
+
+            foreach (BoxCollider2D captureCollider in m_CaptureFrogs)
+            {
+                if (captureCollider.isActiveAndEnabled && m_Box.bounds.Intersects(captureCollider.bounds))
+                {
+                    captureCollider.gameObject.SetActive(false);
+                    IEnumerator CaptureEnumerator()
+                    {
+                        yield return InterfaceBehavior.SetText("You won!");
+                        yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                    }
+                    StartCoroutine(CaptureEnumerator());
                 }
             }
 
@@ -100,8 +120,12 @@ namespace Frogger
             {
                 m_IsDead = true;
                 m_Animator.Play("Die");
-                yield return new WaitForSeconds(1.0f);
-                if (health == 0) yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                yield return new WaitForSeconds(m_DieSeconds);
+                if (health == 0)
+                {
+                    yield return InterfaceBehavior.SetText("You Died");
+                    yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                }
                 else
                 {
                     m_Animator.Play("Idle");
@@ -117,7 +141,7 @@ namespace Frogger
         {
             m_Health = health;
             for (var i = 0; i < m_StartingHealth; i++)
-                m_Hearts[i].enabled = i < health;
+                m_Hearts[i].SetActive(i < health);
         }
 
         private void Kill()

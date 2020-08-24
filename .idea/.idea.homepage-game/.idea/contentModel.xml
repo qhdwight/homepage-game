@@ -8,8 +8,11 @@
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="Frogger" t="Include">
+            <e p="CameraManager.cs" t="Include" />
+            <e p="CaptureFrogBehavior.cs" t="Include" />
             <e p="Frogger.asmdef" t="Include" />
             <e p="FroggerBehavior.cs" t="Include" />
+            <e p="InterfaceBehavior.cs" t="Include" />
             <e p="MovingBehavior.cs" t="Include" />
           </e>
         </e>

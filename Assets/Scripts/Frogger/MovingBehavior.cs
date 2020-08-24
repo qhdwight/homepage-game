@@ -12,7 +12,6 @@ namespace Frogger
         
         protected FroggerBehavior m_Frogger;
         private bool m_LastIntersecting;
-        private PixelPerfectCamera m_Camera;
 
         public bool IsKilling => m_IsKilling;
         public bool IsCarrying => m_IsCarrying;
@@ -22,7 +21,6 @@ namespace Frogger
         {
             Box = GetComponent<BoxCollider2D>();
             m_Frogger = FindObjectOfType<FroggerBehavior>();
-            m_Camera = FindObjectOfType<PixelPerfectCamera>();
             if (transform.Find("Container") is Transform container && container.TryGetComponent(out SpriteRenderer sprite))
                 sprite.color = m_Colors[Random.Range(0, m_Colors.Length)];
         }
@@ -31,12 +29,11 @@ namespace Frogger
         {
             transform.Translate(m_Speed * Time.deltaTime, Space.World);
 
-            var cameraSize = new Vector3(m_Camera.refResolutionX / (float) m_Camera.assetsPPU, m_Camera.refResolutionY / (float) m_Camera.assetsPPU);
-            var cameraBounds = new Bounds(Vector3.zero, cameraSize);
+            Bounds cameraBounds = CameraManager.Bounds;
             if (Box.bounds.min.x > cameraBounds.max.x)
-                transform.Translate(new Vector3 {x = -cameraSize.x - Box.size.x}, Space.World);
+                transform.Translate(new Vector3 {x = -cameraBounds.size.x - Box.size.x}, Space.World);
             if (Box.bounds.max.x < cameraBounds.min.x)
-                transform.Translate(new Vector3 {x = cameraSize.x + Box.size.x}, Space.World);
+                transform.Translate(new Vector3 {x = cameraBounds.size.x + Box.size.x}, Space.World);
         }
 
         public bool HandleFrogger(bool isIntersecting)
