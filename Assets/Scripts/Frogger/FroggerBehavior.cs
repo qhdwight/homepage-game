@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -52,20 +51,20 @@ namespace Frogger
             if (m_IsDead) return;
 
             Sprite sprite = null;
+            Vector3Int? nextCellPosition = null;
+            Transform t = transform;
 
             if (m_Input.sqrMagnitude > Mathf.Epsilon)
             {
-                Transform t = transform;
                 t.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-m_Input.x, m_Input.y), Vector3.forward);
                 m_Animator.Play("Hop");
 
-                Vector3Int cellPosition = m_Tilemap.layoutGrid.WorldToCell(t.position + m_Input);
-                Vector3 snappedPosition = m_Tilemap.CellToWorld(cellPosition) + new Vector3(0.5f, 0.5f);
-
-                sprite = m_Tilemap.GetSprite(cellPosition);
-                if (sprite) t.position = snappedPosition;
+                nextCellPosition = m_Tilemap.layoutGrid.WorldToCell(t.position + m_Input);
+                sprite = m_Tilemap.GetSprite(nextCellPosition.Value);
+                if (sprite) t.position += m_Input;
+                else nextCellPosition = null;
             }
-            
+
             foreach (MovingBehavior behavior in m_Behaviors)
             {
                 bool isIntersecting = Box.bounds.Intersects(behavior.Box.bounds);
@@ -81,12 +80,18 @@ namespace Frogger
             }
 
             if (!Carrier && sprite == m_WaterSprite) Kill();
+
+            if (!Carrier && nextCellPosition is Vector3Int cellPosition) t.position = m_Tilemap.CellToWorld(cellPosition) + new Vector3(0.5f, 0.5f);
         }
 
         private void LateUpdate() => m_Input = Vector3.zero;
 
         [UsedImplicitly]
-        public void OnMove(InputValue input) => m_Input = input.Get<Vector2>();
+        public void OnMove(InputAction.CallbackContext input)
+        {
+            if (input.started)
+                m_Input = input.ReadValue<Vector2>();
+        }
 
         private void DecrementHearts()
         {
@@ -118,7 +123,7 @@ namespace Frogger
         private void Kill()
         {
             if (m_IsDead) return;
-        
+
             DecrementHearts();
         }
     }
