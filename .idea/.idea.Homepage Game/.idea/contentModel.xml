@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$PROJECT_DIR$" t="IncludeRecursive">
-      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+    <e p="C:\Users\qhdwi\AppData\local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\qhdwi\AppData\local\JetBrains\Rider2020.3\resharper-host\local\Transient\Rider\v203\SolutionCaches\_Homepage Game.599730506.00" t="ExcludeRecursive" />
+    <e p="C:\Users\qhdwi\AppData\Roaming\JetBrains\Rider2020.3\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\qhdwi\Projects\Programming\Unity\Homepage Game" t="IncludeRecursive">
       <e p="Assets" t="Include">
-        <e p="FroggerBehavior.cs" t="Include" />
-        <e p="ObstacleBehavior.cs" t="Include" />
+        <e p="Scripts" t="Include">
+          <e p="Frogger" t="Include">
+            <e p="CameraManager.cs" t="Include" />
+            <e p="CaptureFrogBehavior.cs" t="Include" />
+            <e p="Frogger.asmdef" t="Include" />
+            <e p="FroggerBehavior.cs" t="Include" />
+            <e p="InterfaceBehavior.cs" t="Include" />
+            <e p="MovingBehavior.cs" t="Include" />
+          </e>
+        </e>
       </e>
+      <e p="Frogger.csproj" t="IncludeRecursive" />
       <e p="Homepage Game.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="Temp/bin" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Homepage Game.-1242340757.00" t="ExcludeRecursive" />
   </component>
 </project>

@@ -90,7 +90,7 @@ namespace Frogger
                 if (captureCollider.isActiveAndEnabled && m_Box.bounds.Intersects(captureCollider.bounds))
                 {
                     captureCollider.gameObject.SetActive(false);
-                    IEnumerator CaptureEnumerator()
+                    static IEnumerator CaptureEnumerator()
                     {
                         yield return InterfaceBehavior.SetText("You won!");
                         yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
@@ -99,18 +99,29 @@ namespace Frogger
                 }
             }
 
-            if (!Carrier && sprite == m_WaterSprite) Kill();
+            if (!Carrier && sprite == m_WaterSprite)
+                Kill();
 
-            if (!Carrier && nextCellPosition is Vector3Int cellPosition) t.position = m_Tilemap.CellToWorld(cellPosition) + new Vector3(0.5f, 0.5f);
+            if (!Carrier && nextCellPosition is { } cellPosition)
+                t.position = m_Tilemap.CellToWorld(cellPosition) + new Vector3(0.5f, 0.5f);
         }
 
         private void LateUpdate() => m_Input = Vector3.zero;
 
         [UsedImplicitly]
-        public void OnMove(InputAction.CallbackContext input)
+        public void OnMove(InputValue input) => m_Input = input.Get<Vector2>();
+
+        [UsedImplicitly]
+        public void OnTouch(InputValue input)
         {
-            if (input.started)
-                m_Input = input.ReadValue<Vector2>();
+            Vector3 position = transform.position,
+                    mousePosition = Camera.allCameras.First().ScreenToWorldPoint(input.Get<Vector2>());
+            mousePosition.z = position.z;
+            Vector3 direction = (mousePosition - position).normalized;
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                m_Input.x = Mathf.Sign(direction.x);
+            else
+                m_Input.y = Mathf.Sign(direction.y);
         }
 
         private void DecrementHearts()
@@ -123,7 +134,7 @@ namespace Frogger
                 yield return new WaitForSeconds(m_DieSeconds);
                 if (health == 0)
                 {
-                    yield return InterfaceBehavior.SetText("You Died");
+                    yield return InterfaceBehavior.SetText("Game Over!");
                     yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                 }
                 else
