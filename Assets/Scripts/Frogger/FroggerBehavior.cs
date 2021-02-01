@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
@@ -22,7 +20,6 @@ namespace Frogger
         private bool m_IsDead;
         private Transform m_Carrier;
         private MovingBehavior[] m_Behaviors;
-        private Vector3 m_Input;
         private BoxCollider2D m_Box;
         private BoxCollider2D[] m_CaptureFrogs;
 
@@ -56,14 +53,35 @@ namespace Frogger
             Vector3Int? nextCellPosition = null;
             Transform t = transform;
 
-            if (m_Input.sqrMagnitude > Mathf.Epsilon)
+            Vector3 input = default;
+            if (Input.touches.Length > 0 && Input.touches.First().phase == TouchPhase.Began)
             {
-                t.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-m_Input.x, m_Input.y), Vector3.forward);
+                Touch touch = Input.touches.First();
+                Vector3 position = transform.position,
+                        mousePosition = Camera.allCameras.First().ScreenToWorldPoint(touch.position);
+                mousePosition.z = position.z;
+                Vector3 direction = (mousePosition - position).normalized;
+                if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                    input.x = Mathf.Sign(direction.x);
+                else
+                    input.y = Mathf.Sign(direction.y);
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.D)) input.x += 1.0f;
+                if (Input.GetKeyDown(KeyCode.A)) input.x -= 1.0f;
+                if (Input.GetKeyDown(KeyCode.W)) input.y += 1.0f;
+                if (Input.GetKeyDown(KeyCode.S)) input.y -= 1.0f;
+            }
+
+            if (input.sqrMagnitude > Mathf.Epsilon)
+            {
+                t.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-input.x, input.y), Vector3.forward);
                 m_Animator.Play("Hop");
 
-                nextCellPosition = m_Tilemap.layoutGrid.WorldToCell(t.position + m_Input);
+                nextCellPosition = m_Tilemap.layoutGrid.WorldToCell(t.position + input);
                 sprite = m_Tilemap.GetSprite(nextCellPosition.Value);
-                if (sprite) t.position += m_Input;
+                if (sprite) t.position += input;
                 else nextCellPosition = null;
             }
 
@@ -104,24 +122,6 @@ namespace Frogger
 
             if (!Carrier && nextCellPosition is { } cellPosition)
                 t.position = m_Tilemap.CellToWorld(cellPosition) + new Vector3(0.5f, 0.5f);
-        }
-
-        private void LateUpdate() => m_Input = Vector3.zero;
-
-        [UsedImplicitly]
-        public void OnMove(InputValue input) => m_Input = input.Get<Vector2>();
-
-        [UsedImplicitly]
-        public void OnTouch(InputValue input)
-        {
-            Vector3 position = transform.position,
-                    mousePosition = Camera.allCameras.First().ScreenToWorldPoint(input.Get<Vector2>());
-            mousePosition.z = position.z;
-            Vector3 direction = (mousePosition - position).normalized;
-            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-                m_Input.x = Mathf.Sign(direction.x);
-            else
-                m_Input.y = Mathf.Sign(direction.y);
         }
 
         private void DecrementHearts()
