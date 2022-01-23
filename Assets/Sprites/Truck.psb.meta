@@ -25,6 +25,7 @@ ScriptedImporter:
     streamingMipmaps: 1
     streamingMipmapsPriority: 0
     vTOnly: 0
+    ignoreMasterTextureLimit: 0
     nPOTScale: 1
     sRGBTexture: 1
     spriteMode: 2
@@ -79,7 +80,6 @@ ScriptedImporter:
       width: 0
       height: 0
     spriteID: 
-    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -103,7 +103,6 @@ ScriptedImporter:
       width: 2
       height: 7
     spriteID: 221133579c1c6264b885864905e20dfe
-    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -125,7 +124,6 @@ ScriptedImporter:
       width: 11
       height: 13
     spriteID: 762135c362e68de448fb85c815a0d6b4
-    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -147,7 +145,6 @@ ScriptedImporter:
       width: 36
       height: 14
     spriteID: e12d46ca78dc21b488b0d6bd961002a6
-    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -157,6 +154,19 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 3}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    boneReadOnly: 0
   platformSettings:
   - name: Default
     overridden: 1
@@ -170,21 +180,19 @@ ScriptedImporter:
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
   mosaicLayers: 1
+  characterMode: 1
   documentPivot: {x: 0, y: 0}
   documentAlignment: 0
   importHiddenLayers: 0
-  importedTextureWidth: 64
-  importedTextureHeight: 64
-  documentSize: {x: 48, y: 16}
+  layerMappingOption: 2
+  generatePhysicsShape: 0
   paperDollMode: 0
   keepDupilcateSpriteName: 0
+  skeletonAssetReferenceID: 
   spriteCategoryList:
     categories: []
-  textureActualWidth: 64
-  textureActualHeight: 64
   spritePackingTag: 
   resliceFromLayer: 1
-  characterMode: 1
   mosaicPSDLayers: []
   rigPSDLayers:
   - name: Window
@@ -194,6 +202,9 @@ ScriptedImporter:
     spriteID: 221133579c1c6264b885864905e20dfe
     layerID: 9
     mosaicPosition: {x: 4, y: 26}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Head
     spriteName: Head
     isGroup: 0
@@ -201,6 +212,9 @@ ScriptedImporter:
     spriteID: 762135c362e68de448fb85c815a0d6b4
     layerID: 8
     mosaicPosition: {x: 48, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Container
     spriteName: Container
     isGroup: 0
@@ -208,13 +222,14 @@ ScriptedImporter:
     spriteID: e12d46ca78dc21b488b0d6bd961002a6
     layerID: 2
     mosaicPosition: {x: 4, y: 4}
-  characterData:
-    bones: []
-    parts: []
-    dimension: {x: 0, y: 0}
-    characterGroups: []
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
   generateGOHierarchy: 0
   textureAssetName: Truck Texture
   prefabAssetName: Truck Prefab
   spriteLibAssetName: Truck Sprite Lib
+  skeletonAssetName: 
   secondarySpriteTextures: []

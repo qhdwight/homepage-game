@@ -54,24 +54,21 @@ namespace Frogger
             Transform t = transform;
 
             Vector3 input = default;
-            if (Input.touches.Length > 0 && Input.touches.First().phase == TouchPhase.Began)
+            if (Input.touches.Length == 1 && Input.touches.First().phase == TouchPhase.Ended)
             {
                 Touch touch = Input.touches.First();
-                Vector3 position = transform.position,
-                        mousePosition = Camera.allCameras.First().ScreenToWorldPoint(touch.position);
-                mousePosition.z = position.z;
-                Vector3 direction = (mousePosition - position).normalized;
-                if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-                    input.x = Mathf.Sign(direction.x);
-                else
-                    input.y = Mathf.Sign(direction.y);
+                var position = new Vector3(touch.position.x / Screen.width, touch.position.y / Screen.height, 0.0f);
+                if (position.y > 0.5f) input.y = 1.0f;
+                else if (position.x < 0.33f) input.x = -1.0f;
+                else if (position.x < 0.66f) input.y = -1.0f;
+                else input.x = 1.0f;
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.D)) input.x += 1.0f;
-                if (Input.GetKeyDown(KeyCode.A)) input.x -= 1.0f;
-                if (Input.GetKeyDown(KeyCode.W)) input.y += 1.0f;
-                if (Input.GetKeyDown(KeyCode.S)) input.y -= 1.0f;
+                if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) input.x += 1.0f;
+                if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) input.x -= 1.0f;
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) input.y += 1.0f;
+                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) input.y -= 1.0f;
             }
 
             if (input.sqrMagnitude > Mathf.Epsilon)
