@@ -7,7 +7,7 @@ namespace Frogger
     public class InterfaceBehavior : MonoBehaviour
     {
         [SerializeField] private float m_InterfaceSeconds = 4.0f;
-        
+
         public static IEnumerator SetText(string text)
         {
             var instance = FindObjectOfType<InterfaceBehavior>(true);

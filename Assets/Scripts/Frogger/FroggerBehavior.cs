@@ -59,9 +59,18 @@ namespace Frogger
                 Touch touch = Input.touches.First();
                 var position = new Vector3(touch.position.x / Screen.width, touch.position.y / Screen.height, 0.0f);
                 if (position.y > 0.5f) input.y = 1.0f;
-                else if (position.x < 0.33f) input.x = -1.0f;
-                else if (position.x < 0.66f) input.y = -1.0f;
-                else input.x = 1.0f;
+                else switch (position.x)
+                {
+                    case < 1.0f / 3.0f:
+                        input.x = -1.0f;
+                        break;
+                    case < 2.0f / 3.0f:
+                        input.y = -1.0f;
+                        break;
+                    default:
+                        input.x = 1.0f;
+                        break;
+                }
             }
             else
             {
