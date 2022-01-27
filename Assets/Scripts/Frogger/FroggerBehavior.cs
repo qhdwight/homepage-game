@@ -116,7 +116,7 @@ namespace Frogger
                     captureCollider.gameObject.SetActive(false);
                     static IEnumerator CaptureEnumerator()
                     {
-                        yield return InterfaceBehavior.SetText("You won!");
+                        yield return InterfaceBehavior.SetText("wctf{in73rm3d1473_l4n9u4935_ar3_345y_70_in5p3c7}");
                         yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                     }
                     StartCoroutine(CaptureEnumerator());
