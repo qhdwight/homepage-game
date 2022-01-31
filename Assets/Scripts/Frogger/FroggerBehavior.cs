@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 namespace Frogger
 {
@@ -22,6 +25,8 @@ namespace Frogger
         private MovingBehavior[] m_Behaviors;
         private BoxCollider2D m_Box;
         private BoxCollider2D[] m_CaptureFrogs;
+
+        private bool m_IsAmphibious = false;
 
         private Transform Carrier
         {
@@ -58,19 +63,21 @@ namespace Frogger
             {
                 Touch touch = Input.touches.First();
                 var position = new Vector3(touch.position.x / Screen.width, touch.position.y / Screen.height, 0.0f);
-                if (position.y > 0.5f) input.y = 1.0f;
-                else switch (position.x)
-                {
-                    case < 1.0f / 3.0f:
-                        input.x = -1.0f;
-                        break;
-                    case < 2.0f / 3.0f:
-                        input.y = -1.0f;
-                        break;
-                    default:
-                        input.x = 1.0f;
-                        break;
-                }
+                if (position.y > 0.5f)
+                    input.y = 1.0f;
+                else
+                    switch (position.x)
+                    {
+                        case < 1.0f / 3.0f:
+                            input.x = -1.0f;
+                            break;
+                        case < 2.0f / 3.0f:
+                            input.y = -1.0f;
+                            break;
+                        default:
+                            input.x = 1.0f;
+                            break;
+                    }
             }
             else
             {
@@ -114,16 +121,16 @@ namespace Frogger
                 if (captureCollider.isActiveAndEnabled && m_Box.bounds.Intersects(captureCollider.bounds))
                 {
                     captureCollider.gameObject.SetActive(false);
-                    static IEnumerator CaptureEnumerator()
+                    IEnumerator CaptureEnumerator()
                     {
-                        yield return InterfaceBehavior.SetText("wctf{in73rm3d1473_l4n9u4935_ar3_345y_70_in5p3c7}");
+                        yield return InterfaceBehavior.SetText(nFUIAHFUAIFHuiaHWFakjwfhaiuwFHALIWUFhLIAWUFhalwufhlakWUFHALKIWUFHALIKWUHLAIWUFHAWF());
                         yield return SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
                     }
                     StartCoroutine(CaptureEnumerator());
                 }
             }
 
-            if (!Carrier && sprite == m_WaterSprite)
+            if (!m_IsAmphibious && !Carrier && sprite == m_WaterSprite)
                 Kill();
 
             if (!Carrier && nextCellPosition is { } cellPosition)
@@ -166,6 +173,24 @@ namespace Frogger
             if (m_IsDead) return;
 
             DecrementHearts();
+        }
+
+        private string nFUIAHFUAIFHuiaHWFakjwfhaiuwFHALIWUFhLIAWUFhalwufhlakWUFHALKIWUFHALIKWUHLAIWUFHAWF()
+        {
+            Vector3 aWUIHFILUAWFHliaWUFHALIWUFHLAIWUFHALWIFUHaILWUFhawuifhalIWUFHilAWFHALIWUFH = transform.position;
+            Random.InitState(Mathf.RoundToInt(aWUIHFILUAWFHliaWUFHALIWUFHLAIWUFHALWIFUHaILWUFhawuifhalIWUFHilAWFHALIWUFH.x));
+            var agheuihgaseuighaseg = new Vector3Int(Mathf.RoundToInt(aWUIHFILUAWFHliaWUFHALIWUFHLAIWUFHALWIFUHaILWUFhawuifhalIWUFHilAWFHALIWUFH.x) * Random.Range(-1337, 1337),
+                                                     Mathf.RoundToInt(aWUIHFILUAWFHliaWUFHALIWUFHLAIWUFHALWIFUHaILWUFhawuifhalIWUFHilAWFHALIWUFH.y) * Random.Range(-1337, 1337),
+                                                     Mathf.RoundToInt(aWUIHFILUAWFHliaWUFHALIWUFHLAIWUFHALWIFUHaILWUFhawuifhalIWUFHilAWFHALIWUFH.z) * Random.Range(-1337, 1337));
+            byte[] UAWFHOLIWUFGAWIOLFUGAWIFUGAWIFLYUGAWFLBNjkwanbfkluawfnkuawfnliAUWFHALIWUFGHWAF = Encoding.UTF8.GetBytes(agheuihgaseuighaseg.ToString());
+            string ujWAHFILAUWHFuwhfiauwhfawuihf = Convert.ToBase64String(UAWFHOLIWUFGAWIOLFUGAWIFUGAWIFLYUGAWFLBNjkwanbfkluawfnkuawfnliAUWFHALIWUFGHWAF);
+            ujWAHFILAUWHFuwhfiauwhfawuihf += ujWAHFILAUWHFuwhfiauwhfawuihf;
+            byte[] eauihflaiseufase7uifhase7fahsefluihalsi8f3hliuhfliasufhaselifedf = Convert.FromBase64String("PCc1FTJ1BBd9JQYBIXMzDhRgCGIldHYsfRwFSS0IWAUxNCIDLSoLCQ==");
+            var fueghaliseughlaseguhseug7asetgiaseufhliseaugh7asegt897293 = new byte[eauihflaiseufase7uifhase7fahsefluihalsi8f3hliuhfliasufhaselifedf.Length];
+            for (var goblue = 0; goblue < eauihflaiseufase7uifhase7fahsefluihalsi8f3hliuhfliasufhaselifedf.Length; goblue++)
+                fueghaliseughlaseguhseug7asetgiaseufhliseaugh7asegt897293[goblue] =
+                    (byte)(ujWAHFILAUWHFuwhfiauwhfawuihf[goblue] ^ eauihflaiseufase7uifhase7fahsefluihalsi8f3hliuhfliasufhaselifedf[goblue]);
+            return Encoding.UTF8.GetString(fueghaliseughlaseguhseug7asetgiaseufhliseaugh7asegt897293)[..33];
         }
     }
 }
